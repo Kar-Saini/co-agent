@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Co-Agent",
+  "version": "1.0.0",
+  "description": "Your AI co-agent for Google Sheets",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "913431738582-4djv7qppoq75v2gga2asaqeumhad9e6r.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets",
+      "https://www.googleapis.com/auth/drive.file"
+    ]
+  },
+  "permissions": ["storage", "identity", "scripting", "tabs"],
+  "host_permissions": ["https://*.google.com/*"]
+}
