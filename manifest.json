@@ -17,6 +17,12 @@
       "https://www.googleapis.com/auth/drive.file"
     ]
   },
+  "content_scripts": [
+    {
+      "js": ["injection.js"],
+      "matches": ["https://docs.google.com/spreadsheets/*"]
+    }
+  ],
   "permissions": ["storage", "identity", "scripting", "tabs"],
   "host_permissions": ["https://*.google.com/*"]
 }

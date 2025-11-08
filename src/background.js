@@ -15,16 +15,3 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
         return true;
     }
 });
-async function readRange(spreadsheetId, range = "Sheet1!A1:D10", token) {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(range)}`;
-    const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
-    if (!res.ok)
-        throw new Error(`Sheets read failed: ${res.status} ${await res.text()}`);
-    return res.json(); // contains .values array
-}
-function extractSpreadsheetId(url) {
-    const m = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
-    return m ? m[1] : null;
-}

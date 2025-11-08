@@ -19,6 +19,7 @@ export default defineConfig({
       input: {
         popup: resolve(__dirname, "index.html"),
         background: resolve(__dirname, "src/background.ts"),
+        injection: resolve(__dirname, "src/injection.tsx"),
       },
       output: {
         entryFileNames: `[name].js`,

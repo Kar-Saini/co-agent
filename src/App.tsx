@@ -1,21 +1,39 @@
 import { useState } from "react";
 
 export default function App() {
-  const [analyze, setAnalyze] = useState<boolean>(false);
-  const [response, setResponse] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
-  function handleAnalyze() {
-    chrome.runtime.sendMessage({ action: "analyze-tab" }, (response) => {
-      setResponse(response.status);
+  const toggleAgent = async () => {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
     });
-  }
+    if (!tab?.id) return;
+
+    if (!enabled) {
+      chrome.tabs.sendMessage(tab.id, { action: "inject_ui" });
+    } else {
+      chrome.tabs.sendMessage(tab.id, { action: "remove_ui" });
+    }
+    setEnabled(!enabled);
+  };
 
   return (
-    <div>
-      <h1>Co Agent</h1>
-      <button>Analyze</button>
-      <button>Authenticate</button>
+    <div style={{ width: 280, padding: 16 }}>
+      <h3>🧠 Co-Agent</h3>
+      <button
+        onClick={toggleAgent}
+        style={{
+          background: enabled ? "#ef4444" : "#22c55e",
+          color: "white",
+          border: "none",
+          padding: "8px 12px",
+          borderRadius: "6px",
+          cursor: "pointer",
+        }}
+      >
+        {enabled ? "Disable Agent" : "Enable Agent"}
+      </button>
     </div>
   );
 }
